@@ -1,5 +1,5 @@
 import { useApp } from "../ThemedApp";
-import { Box, AppBar, Toolbar, Typograpyh, IconButton } from "@mui/material";
+import { Box, AppBar, Toolbar, Typography, IconButton } from "@mui/material";
 import {
     Menu as MenuIcon,
     Add as AddIcon,
@@ -18,7 +18,7 @@ export default function Header() {
                     <MenuIcon />
                 </IconButton>
 
-                <Typograpyh sx={{ flexGrow: 1, ml: 2 }}>YayCha</Typograpyh>
+                <Typography sx={{ flexGrow: 1, ml: 2 }}>YayCha</Typography>
 
                 <Box>
                     <IconButton
