@@ -4,10 +4,11 @@ import {
     Menu as MenuIcon,
     Add as AddIcon,
     LightMode as LightModeIcon,
+    DarkMode as DarkModeIcon,
 } from "@mui/icons-material";
 
 export default function Header() {
-    const { showFrom, setShowForm } = useApp();
+    const { showFrom, setShowForm, mode, setMode } = useApp();
 
     return (
         <AppBar position="static">
@@ -26,11 +27,21 @@ export default function Header() {
                         onClick={() => setShowForm(!showFrom)}>
                         <AddIcon />
                     </IconButton>
-                    <IconButton
-                        color="inherit"
-                        edge="end">
-                        <LightModeIcon />
-                    </IconButton>
+                    {mode === "dark" ? (
+                        <IconButton
+                            color="inherit"
+                            edge="end"
+                            onClick={() => setMode("light")}>
+                            <LightModeIcon />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            color="inherit"
+                            edge="end"
+                            onClick={() => setMode("dark")}>
+                            <DarkModeIcon />
+                        </IconButton>
+                    )}
                 </Box>
 
             </Toolbar>
