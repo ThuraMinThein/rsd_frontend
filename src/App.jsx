@@ -7,7 +7,7 @@ import { Box, Container } from "@mui/material";
 
 export default function App() {
 
-  const { showForm } = useApp();
+  const { showForm, setGlobalMsg } = useApp();
 
   const [data, setData] = useState([
     { id: 3, content: "Hello, World!", name: "Alice" },
@@ -17,11 +17,13 @@ export default function App() {
 
   const remove = (id) => {
     setData(data.filter((item) => item.id !== id));
+    setGlobalMsg(`Item ${id} deleted.`);
   }
 
   const add = (content, name) => {
     const id = data ? data[data.length - 1]?.id + 1 : 1;
     setData([{ id, content, name }, ...data]);
+    setGlobalMsg(`Item ${content} added.`);
   }
 
   return (

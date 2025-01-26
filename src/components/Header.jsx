@@ -8,14 +8,15 @@ import {
 } from "@mui/icons-material";
 
 export default function Header() {
-    const { showFrom, setShowForm, mode, setMode } = useApp();
+    const { showFrom, setShowForm, mode, setMode, setShowDrawer } = useApp();
 
     return (
         <AppBar position="static">
             <Toolbar>
                 <IconButton
                     color="inherit"
-                    edge="start">
+                    edge="start"
+                    onClick={() => setShowDrawer(true)}>
                     <MenuIcon />
                 </IconButton>
 
