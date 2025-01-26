@@ -1,14 +1,12 @@
 name: RSD CI
 
-on:
-    push:
-        branches: [main]
+on: push
 
 jobs:
-    super-lint:
-        name: Lint code base
-        runs-on: ubunto-latest
-        steps:
-          - name: Checkout code
-            uses: action/checkout@v2
+  super-lint:
+    name: Lint code base
+    runs-on: ubunto-latest
+    steps:
+      - name: Checkout code
+        uses: action/checkout@v2
     
