@@ -8,10 +8,12 @@ import {
 } from "@mui/icons-material";
 import { deepPurple } from "@mui/material/colors";
 import { useApp } from "../ThemedApp";
+import { useNavigate } from "react-router-dom";
 
 
 export default function AppDrawer() {
     const { showDrawer, setShowDrawer, auth, setAuth } = useApp();
+    const navigate = useNavigate()
     return (
         <div>
             <Drawer
@@ -50,7 +52,7 @@ export default function AppDrawer() {
                 </Box>
                 <List>
                     <ListItem>
-                        <ListItemButton>
+                        <ListItemButton onClick={() => navigate("/")}>
                             <ListItemIcon>
                                 <HomeIcon />
                             </ListItemIcon>
@@ -61,7 +63,7 @@ export default function AppDrawer() {
                     {auth && (
                         <>
                             <ListItem>
-                                <ListItemButton>
+                                <ListItemButton onClick={() => navigate("/profile/1")}>
                                     <ListItemIcon>
                                         <ProfileIcon />
                                     </ListItemIcon>
@@ -81,7 +83,7 @@ export default function AppDrawer() {
                     {!auth && (
                         <>
                             <ListItem>
-                                <ListItemButton>
+                                <ListItemButton onClick={() => navigate("/register")}>
                                     <ListItemIcon>
                                         <RegisterIcon />
                                     </ListItemIcon>
@@ -89,7 +91,7 @@ export default function AppDrawer() {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem>
-                                <ListItemButton onClick={() => setAuth(true)}>
+                                <ListItemButton onClick={() => navigate("/login")}>
                                     <ListItemIcon>
                                         <LoginIcon />
                                     </ListItemIcon>
