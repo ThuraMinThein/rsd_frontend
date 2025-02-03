@@ -4,8 +4,6 @@ import {
     ThemeProvider,
     createTheme,
 } from "@mui/material";
-// import App from "./App";
-import AppDrawer from "./components/AppDrawer";
 import { deepPurple, grey } from "@mui/material/colors";
 import {
     createBrowserRouter,
@@ -88,8 +86,6 @@ export default function ThemedApp() {
                     auth, setAuth,
                     mode, setMode,
                 }}>
-                {/* <App /> */}
-                <AppDrawer />
                 <RouterProvider router={router} />
                 <CssBaseline />
             </AppContext.Provider>
