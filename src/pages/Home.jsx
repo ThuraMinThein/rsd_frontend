@@ -2,27 +2,13 @@ import { Box, Alert } from "@mui/material";
 import Form from "../components/Form";
 import Item from "../components/Item";
 import { useApp } from "../ThemedApp";
-import { gql, useQuery } from "@apollo/client";
-
-const GET_POSTS = gql`
-query Posts {
-    posts {
-        id
-        content
-        createdAt
-        user {
-            id
-            name
-            userName
-        }
-    }
-}
-`;
+import { useQuery } from "@apollo/client";
+import { GetPosts } from "../queries/post-query";
 
 export default function Home() {
     const { showForm, setGlobalMsg } = useApp();
 
-    const { data, error, loading } = useQuery(GET_POSTS);
+    const { data, error, loading } = useQuery(GetPosts());
 
     const remove = () => {
         setGlobalMsg("An item deleted");

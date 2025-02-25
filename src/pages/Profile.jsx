@@ -1,7 +1,24 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography, Alert } from "@mui/material";
 import { pink } from "@mui/material/colors";
 import Item from "../components/Item";
+import { useQuery } from "@apollo/client";
+import { GetPostsWithUserId } from "../queries/post-query";
+
 export default function Profile() {
+
+    const { data, error, loading } = useQuery(GetPostsWithUserId(2));
+
+    if (error) {
+        return (
+            <Box>
+                <Alert severity="warning">{error.message}</Alert>
+            </Box>
+        );
+    }
+    if (loading) {
+        return <Box sx={{ textAlign: "center" }}>Loading...</Box>;
+    }
+
     return (
         <Box>
             <Box sx={{ bgcolor: "banner", height: 150, borderRadius: 4 }}></Box>
@@ -23,15 +40,9 @@ export default function Profile() {
                     </Typography>
                 </Box>
             </Box>
-            <Item
-                key={1}
-                remove={() => { }}
-                item={{
-                    id: 1,
-                    content: "A post content from Alice",
-                    name: "Alice",
-                }}
-            />
+            {data.postsWithUserId.map(item => {
+                return <Item key={item.id} item={item} />;
+            })}
         </Box>
     );
 }
