@@ -1,14 +1,7 @@
 import { useState, createContext, useContext, useMemo } from "react";
-import {
-    CssBaseline,
-    ThemeProvider,
-    createTheme,
-} from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme, } from "@mui/material";
 import { deepPurple, grey } from "@mui/material/colors";
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, } from "react-router-dom";
 import Template from "./Template";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -16,8 +9,24 @@ import Register from "./pages/Register";
 import Likes from "./pages/Likes";
 import Profile from "./pages/Profile";
 import Comments from "./pages/Comments";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
+
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const AppContext = createContext();
+
+const httpLink = createHttpLink({
+    uri: baseUrl,
+    credentials: 'include',
+});
+
+export const apolloClient = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache(),
+});
+export const queryClient = new QueryClient();
 
 export function useApp() {
     return useContext(AppContext);
@@ -86,7 +95,11 @@ export default function ThemedApp() {
                     auth, setAuth,
                     mode, setMode,
                 }}>
-                <RouterProvider router={router} />
+                <QueryClientProvider client={queryClient}>
+                    <ApolloProvider client={apolloClient}>
+                        <RouterProvider router={router} />
+                    </ApolloProvider>
+                </QueryClientProvider>
                 <CssBaseline />
             </AppContext.Provider>
         </ThemeProvider>

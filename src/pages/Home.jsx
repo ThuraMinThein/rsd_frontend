@@ -1,29 +1,52 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Alert } from "@mui/material";
 import Form from "../components/Form";
 import Item from "../components/Item";
 import { useApp } from "../ThemedApp";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_POSTS = gql`
+query Posts {
+    posts {
+        id
+        content
+        createdAt
+        user {
+            id
+            name
+            userName
+        }
+    }
+}
+`;
 
 export default function Home() {
     const { showForm, setGlobalMsg } = useApp();
-    const [data, setData] = useState([
-        { id: 3, content: "Yay, interesting.", name: "Chris" },
-        { id: 2, content: "React is fun.", name: "Bob" },
-        { id: 1, content: "Hello, World!", name: "Alice" },
-    ]);
-    const remove = id => {
-        setData(data.filter(item => item.id !== id));
+
+    const { data, error, loading } = useQuery(GET_POSTS);
+
+    const remove = () => {
         setGlobalMsg("An item deleted");
     };
-    const add = (content, name) => {
-        const id = data[0].id + 1;
-        setData([{ id, content, name }, ...data]);
+
+    const add = () => {
         setGlobalMsg("An item added");
     };
+
+    if (error) {
+        return (
+            <Box>
+                <Alert severity="warning">{error.message}</Alert>
+            </Box>
+        );
+    }
+    if (loading) {
+        return <Box sx={{ textAlign: "center" }}>Loading...</Box>;
+    }
+
     return (
         <Box>
             {showForm && <Form add={add} />}
-            {data.map(item => {
+            {data.posts.map(item => {
                 return (
                     <Item key={item.id} item={item} remove={remove} />
                 );
