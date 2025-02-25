@@ -6,7 +6,7 @@ import { GetPostsWithUserId } from "../queries/post-query";
 
 export default function Profile() {
 
-    const { data, error, loading } = useQuery(GetPostsWithUserId(2));
+    const { data, error, loading } = useQuery(GetPostsWithUserId(1));
 
     if (error) {
         return (
@@ -34,9 +34,9 @@ export default function Profile() {
                 }}>
                 <Avatar sx={{ width: 100, height: 100, bgcolor: pink[500] }} />
                 <Box sx={{ textAlign: "center" }}>
-                    <Typography>Alice</Typography>
+                    <Typography>{data.userWithId.name}</Typography>
                     <Typography sx={{ fontSize: "0.8em", color: "text.fade" }}>
-                        Alice's profile bio content here
+                        {data.userWithId.name} profile bio content here
                     </Typography>
                 </Box>
             </Box>

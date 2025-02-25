@@ -1,33 +1,24 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Alert } from "@mui/material";
 import Item from "../components/Item";
+import { useQuery } from "@apollo/client";
+import { getCommentsWithPostId } from "../queries/post-query";
+
 export default function Comments() {
+
+    const { data, error, loading } = useQuery(getCommentsWithPostId(1));
+    if (error) {
+        return (
+            <Box>
+                <Alert severity="warning">{error.message}</Alert>
+            </Box>
+        );
+    }
+    if (loading) {
+        return <Box sx={{ textAlign: "center" }}>Loading...</Box>;
+    }
     return (
         <Box>
-            <Item
-                primary
-                key={1}
-                item={{
-                    id: 1,
-                    content: "Initial post content from Alice",
-                    name: "Alice",
-                }}
-                remove={() => { }} />
-            <Item
-                key={2}
-                item={{
-                    id: 2,
-                    content: "A comment from Bob",
-                    name: "Bob",
-                }}
-                remove={() => { }} />
-            <Item
-                key={3}
-                item={{
-                    id: 3,
-                    content: "A comment reply from Alice",
-                    name: "Alice",
-                }}
-                remove={() => { }} />
+            {data.commentsWithPostId.map(item => <Item key={item.id} item={item} />)}
             <form>
                 <Box
                     sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 3, }}>
