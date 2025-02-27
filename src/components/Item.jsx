@@ -4,13 +4,17 @@ import { green } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { formatRelative } from "date-fns";
 
-export default function Item({ item, remove, primary }) {
+export default function Item({ item, remove, primary, comment }) {
 
     const navigate = useNavigate();
     return (
         <Card sx={{ mb: 2 }}>
             {primary && <Box sx={{ height: 50, bgcolor: green[500] }} />}
-            <CardContent onClick={() => navigate("/comments/1")}>
+            <CardContent onClick={() => {
+                if (comment) return false;
+                navigate(`/comments/${item.id}`)
+            }}
+                sx={{ cursor: "pointer" }}>
                 <Box
                     sx={{
                         display: "flex",

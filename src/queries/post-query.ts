@@ -31,7 +31,7 @@ export const GetPostsWithUserId = (userId) => {
                     bio
                 }
             }
-            userWithId(id: "1") {
+            userWithId(id: ${userId}) {
                 id
                 name
                 userName
@@ -44,7 +44,7 @@ export const GetPostsWithUserId = (userId) => {
 export const getCommentsWithPostId = (postId) => {
     return gql`
         query CommentsWithPostId {
-            commentsWithPostId(postId: "1") {
+            commentsWithPostId(postId: ${postId}) {
                 id
                 content
                 createdAt
@@ -53,6 +53,17 @@ export const getCommentsWithPostId = (postId) => {
                     name
                     userName
                     bio
+                }
+                post {
+                    id
+                    content
+                    createdAt
+                    user {
+                        id
+                        name
+                        userName
+                        bio
+                    }
                 }
             }
     }

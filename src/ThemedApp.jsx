@@ -13,7 +13,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_URL + "/graphql";
 
 const AppContext = createContext();
 
