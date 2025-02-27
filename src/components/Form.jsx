@@ -5,12 +5,18 @@ export default function Form({ add }) {
 
     const contentRef = useRef();
 
+    const data = {
+        content: "",
+        createdAt: new Date().toISOString(),
+        userId: 3,
+    }
+
     return (
         <form
             onSubmit={e => {
                 e.preventDefault();
-                const content = contentRef.current.value;
-                add(content, "James");
+                data.content = contentRef.current.value;
+                add(data);
                 e.currentTarget.reset();
             }}>
             <Box sx={{ mb: 4, textAlign: "right" }}>

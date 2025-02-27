@@ -20,7 +20,7 @@ export default function Home() {
                 method: "DELETE",
                 credentials: "include",
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": token
                 }
             });
             if (res.ok) {
@@ -33,9 +33,29 @@ export default function Home() {
         }
     )
 
-    const add = () => {
-        setGlobalMsg("An item added");
-    };
+    const add = useMutation(
+        async data => {
+            if (!data.content) {
+                setGlobalMsg("Content is required");
+                return;
+            }
+            const res = await fetch(`${baseUrl}/posts`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                window.location.reload();
+                setGlobalMsg("A post added");
+            } else {
+                setGlobalMsg("Error adding post");
+            }
+        }
+    )
 
     if (error) {
         return (
@@ -50,7 +70,7 @@ export default function Home() {
 
     return (
         <Box>
-            {showForm && <Form add={add} />}
+            {showForm && <Form add={add.mutate} />}
             {data.posts.map(item => {
                 return (
                     <Item key={item.id} item={item} remove={remove.mutate} />

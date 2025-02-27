@@ -6,8 +6,11 @@ import {
     LightMode as LightModeIcon,
     DarkMode as DarkModeIcon,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+
+    const navigate = useNavigate();
     const { showFrom, setShowForm, mode, setMode, setShowDrawer } = useApp();
 
     return (
@@ -20,7 +23,7 @@ export default function Header() {
                     <MenuIcon />
                 </IconButton>
 
-                <Typography sx={{ flexGrow: 1, ml: 2 }}>YayCha</Typography>
+                <Typography onClick={() => navigate("/")} sx={{ flexGrow: 1, ml: 2 }}>YayCha</Typography>
 
                 <Box>
                     <IconButton

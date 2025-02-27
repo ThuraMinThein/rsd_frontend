@@ -35,7 +35,7 @@ export default function Item({ item, remove, primary, comment }) {
                         <Typography
                             variant="caption"
                             sx={{ color: green[500] }}>
-                            {formatRelative(item.createdAt, new Date())}
+                            {formatRelative(item?.createdAt, new Date())}
                         </Typography>
                     </Box>
                     <IconButton
