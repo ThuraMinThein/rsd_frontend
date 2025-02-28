@@ -3,10 +3,12 @@ import { pink } from "@mui/material/colors";
 import Item from "../components/Item";
 import { useQuery } from "@apollo/client";
 import { GetPostsWithUserId } from "../queries/post-query";
+import { useParams } from "react-router-dom";
 
 export default function Profile() {
+    const { id } = useParams();
 
-    const { data, error, loading } = useQuery(GetPostsWithUserId(1));
+    const { data, error, loading } = useQuery(GetPostsWithUserId(id));
 
     if (error) {
         return (
@@ -36,7 +38,7 @@ export default function Profile() {
                 <Box sx={{ textAlign: "center" }}>
                     <Typography>{data.userWithId.name}</Typography>
                     <Typography sx={{ fontSize: "0.8em", color: "text.fade" }}>
-                        {data.userWithId.name} profile bio content here
+                        {data.userWithId.bio || "No bio!!!"}
                     </Typography>
                 </Box>
             </Box>

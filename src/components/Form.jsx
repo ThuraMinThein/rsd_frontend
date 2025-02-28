@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useRef } from "react"
 import { Box, TextField, Button } from "@mui/material";
 
@@ -8,7 +9,6 @@ export default function Form({ add }) {
     const data = {
         content: "",
         createdAt: new Date().toISOString(),
-        userId: 3,
     }
 
     return (

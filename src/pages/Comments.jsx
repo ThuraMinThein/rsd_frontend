@@ -6,11 +6,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import { useApp } from "../ThemedApp";
 import { useRef } from "react";
+import { getToken } from "../auth/auth-service";
 
 export default function Comments() {
 
     const baseUrl = import.meta.env.VITE_BASE_URL;
-    const token = "Bearer " + import.meta.env.VITE_TOKEN;
+    const token = "Bearer " + getToken();
 
     const navigate = useNavigate();
     const { setGlobalMsg } = useApp();
@@ -61,7 +62,6 @@ export default function Comments() {
         content: "",
         createdAt: new Date().toISOString(),
         postId,
-        userId: 1
     }
 
     const addComment = async data => {

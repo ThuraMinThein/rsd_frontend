@@ -11,6 +11,8 @@ import Profile from "./pages/Profile";
 import Comments from "./pages/Comments";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
+import { getToken } from "./auth/auth-service";
+import { setContext } from "@apollo/client/link/context";
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL + "/graphql";
@@ -22,8 +24,18 @@ const httpLink = createHttpLink({
     credentials: 'include',
 });
 
+const authLink = setContext((_, { headers }) => {
+    const token = getToken();
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        }
+    }
+});
+
 export const apolloClient = new ApolloClient({
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 export const queryClient = new QueryClient();

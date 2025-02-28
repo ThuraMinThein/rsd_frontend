@@ -9,6 +9,7 @@ import {
 import { deepPurple } from "@mui/material/colors";
 import { useApp } from "../ThemedApp";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../auth/auth-service";
 
 
 export default function AppDrawer() {
@@ -46,7 +47,7 @@ export default function AppDrawer() {
                             }}
                         />
                         <Typography sx={{ fontWeight: "bold" }}>
-                            Alice
+                            {auth ? auth.username : "Guest"}
                         </Typography>
                     </Box>
                 </Box>
@@ -63,7 +64,7 @@ export default function AppDrawer() {
                     {auth && (
                         <>
                             <ListItem>
-                                <ListItemButton onClick={() => navigate("/profile/1")}>
+                                <ListItemButton onClick={() => navigate(`/profile/${auth.id}`)}>
                                     <ListItemIcon>
                                         <ProfileIcon />
                                     </ListItemIcon>
@@ -71,7 +72,11 @@ export default function AppDrawer() {
                                 </ListItemButton>
                             </ListItem>
                             <ListItem>
-                                <ListItemButton onClick={() => setAuth(null)}>
+                                <ListItemButton onClick={() => {
+                                    setAuth(null);
+                                    navigate("/");
+                                    logout();
+                                }}>
                                     <ListItemIcon>
                                         <LogoutIcon color="error" />
                                     </ListItemIcon>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Card, CardContent, Typography, IconButton, } from "@mui/material";
 import { Alarm as TimeIcon, AccountCircle as UserIcon, Delete as DeleteIcon, } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
@@ -54,7 +55,12 @@ export default function Item({ item, remove, primary, comment }) {
                         flexDirection: "row",
                         alignItems: "center",
                         gap: 1,
-                    }}>
+                    }}
+                    onClick={(e) => {
+                        navigate(`/profile/${item.user.id}`)
+                        e.stopPropagation();
+                    }}
+                >
                     <UserIcon
                         fontSize="12"
                         color="info"

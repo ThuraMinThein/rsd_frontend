@@ -5,12 +5,13 @@ import { useApp } from "../ThemedApp";
 import { useQuery } from "@apollo/client";
 import { GetPosts } from "../queries/post-query";
 import { useMutation } from "react-query";
+import { getToken } from "../auth/auth-service";
 
 export default function Home() {
     const { showForm, setGlobalMsg } = useApp();
 
     const baseUrl = import.meta.env.VITE_BASE_URL;
-    const token = "Bearer " + import.meta.env.VITE_TOKEN;
+    const token = "Bearer " + getToken();
 
     const { data, error, loading } = useQuery(GetPosts());
 
@@ -25,9 +26,9 @@ export default function Home() {
             });
             if (res.ok) {
                 window.location.reload();
-                setGlobalMsg("A comment deleted");
+                setGlobalMsg("A post deleted");
             } else {
-                setGlobalMsg("Error deleting comment");
+                setGlobalMsg("Error deleting post");
             }
 
         }
@@ -71,11 +72,14 @@ export default function Home() {
     return (
         <Box>
             {showForm && <Form add={add.mutate} />}
-            {data.posts.map(item => {
-                return (
-                    <Item key={item.id} item={item} remove={remove.mutate} />
-                );
-            })}
+            {data.posts.length == 0 ?
+                <Box sx={{ textAlign: "center" }}>No posts yet, create one and be the first</Box>
+                :
+                data.posts.map(item => {
+                    return (
+                        <Item key={item.id} item={item} remove={remove.mutate} />
+                    );
+                })}
         </Box>
     );
 }
