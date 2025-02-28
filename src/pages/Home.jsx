@@ -58,6 +58,15 @@ export default function Home() {
         }
     )
 
+
+    if (!getToken()) {
+        return (
+            <Box sx={{ textAlign: "center" }}>
+                <Alert severity="warning">Please login to view posts</Alert>
+            </Box>
+        );
+    }
+
     if (error) {
         return (
             <Box>
