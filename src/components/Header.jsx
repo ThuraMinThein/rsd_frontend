@@ -23,7 +23,7 @@ export default function Header() {
                     <MenuIcon />
                 </IconButton>
 
-                <Typography onClick={() => navigate("/")} sx={{ flexGrow: 1, ml: 2 }}>YayCha</Typography>
+                <Typography onClick={() => navigate("/")} sx={{ flexGrow: 1, ml: 2 }}>RSD</Typography>
 
                 <Box>
                     <IconButton
