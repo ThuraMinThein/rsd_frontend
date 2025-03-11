@@ -38,32 +38,13 @@ export async function loginUser(userName, password) {
 
 export async function likePost(data) {
     const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/posts/like`, {
+    const res = await fetch(`${base_url}/posts/like/${data.postId}`, {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
             "authorization": token
         },
-        body: JSON.stringify(data),
-    });
-    if (res.ok) {
-        return await res.json();
-    } else {
-        throw new Error(res.statusText);
-    }
-}
-
-export async function unlikePost(data) {
-    const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/posts/unlike`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            "authorization": token
-        },
-        body: JSON.stringify(data),
     });
     if (res.ok) {
         return await res.json();
@@ -74,32 +55,13 @@ export async function unlikePost(data) {
 
 export async function likeComment(data) {
     const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/comments/like`, {
+    const res = await fetch(`${base_url}/comments/like/${data.commentId}`, {
         method: "POST",
         credentials: "include",
         headers: {
             "Content-Type": "application/json",
             "authorization": token
         },
-        body: JSON.stringify(data),
-    });
-    if (res.ok) {
-        return await res.json();
-    } else {
-        throw new Error(res.statusText);
-    }
-}
-
-export async function unlikeComment(data) {
-    const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/comments/unlike`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            "authorization": token
-        },
-        body: JSON.stringify(data),
     });
     if (res.ok) {
         return await res.json();
