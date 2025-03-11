@@ -36,7 +36,7 @@ export async function loginUser(userName, password) {
 
 }
 
-export async function likePost(data) {
+export async function likeUnlikePost(data) {
     const token = "Bearer " + getToken();
     const res = await fetch(`${base_url}/posts/like/${data.postId}`, {
         method: "POST",
@@ -53,7 +53,7 @@ export async function likePost(data) {
     }
 }
 
-export async function likeComment(data) {
+export async function likeUnlikeComment(data) {
     const token = "Bearer " + getToken();
     const res = await fetch(`${base_url}/comments/like/${data.commentId}`, {
         method: "POST",

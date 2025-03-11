@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useMemo } from "react";
+import { useState, createContext, useContext, useMemo, useEffect } from "react";
 import { CssBaseline, ThemeProvider, createTheme, } from "@mui/material";
 import { deepPurple, grey } from "@mui/material/colors";
 import { createBrowserRouter, RouterProvider, } from "react-router-dom";
@@ -13,6 +13,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { getToken } from "./auth/auth-service";
 import { setContext } from "@apollo/client/link/context";
+import { loginUser } from "./libs/fetcher";
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL + "/graphql";
@@ -96,6 +97,12 @@ export default function ThemedApp() {
             },
         });
     }, [mode]);
+
+    useEffect(() => {
+        loginUser().then(user => {
+            if (user) setAuth(user);
+        });
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>

@@ -4,6 +4,8 @@ import { Alarm as TimeIcon, AccountCircle as UserIcon, Delete as DeleteIcon, } f
 import { green } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { formatRelative } from "date-fns";
+import { LikeButton } from "./LikeButton";
+import { CommentButton } from "./CommentButton";
 
 export default function Item({ item, remove, primary, comment }) {
 
@@ -59,13 +61,14 @@ export default function Item({ item, remove, primary, comment }) {
                     onClick={(e) => {
                         navigate(`/profile/${item.user.id}`)
                         e.stopPropagation();
-                    }}
-                >
+                    }}>
                     <UserIcon
                         fontSize="12"
                         color="info"
                     />
                     <Typography variant="caption">{item.user.name}</Typography>
+                    <LikeButton item={item} comment={comment} />
+                    <CommentButton item={item} comment={comment} />
                 </Box>
             </CardContent>
         </Card>
