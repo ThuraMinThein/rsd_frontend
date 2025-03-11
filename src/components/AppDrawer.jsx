@@ -47,7 +47,7 @@ export default function AppDrawer() {
                             }}
                         />
                         <Typography sx={{ fontWeight: "bold" }}>
-                            {auth ? auth.username : "Guest"}
+                            {auth ? auth.name : "Guest"}
                         </Typography>
                     </Box>
                 </Box>
