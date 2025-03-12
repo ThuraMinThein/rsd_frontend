@@ -20,6 +20,7 @@ export const GetPosts = () => {
                 id
                 content
                 createdAt
+                totalLikes
                 user {
                     id
                     name
@@ -61,6 +62,7 @@ export const getCommentsWithPostId = (postId) => {
                 id
                 content
                 createdAt
+                totalLikes
                 user {
                     id
                     name
@@ -71,6 +73,7 @@ export const getCommentsWithPostId = (postId) => {
                     id
                     content
                     createdAt
+                    totalLikes
                     user {
                         id
                         name

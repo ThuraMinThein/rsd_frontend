@@ -7,6 +7,7 @@ import { useMutation } from "react-query";
 import { likeUnlikePost, likeUnlikeComment } from "../libs/fetcher";
 
 export function LikeButton({ item, comment }) {
+    console.log(item)
     const navigate = useNavigate();
     const { auth } = useApp();
     function isLiked() {
@@ -79,7 +80,7 @@ export function LikeButton({ item, comment }) {
                 sx={{ color: "text.fade" }}
                 variant="text"
                 size="small">
-                {item.likes ? item.likes.length : 0}
+                {item.totalLikes ? item.totalLikes : 0}
             </Button>
         </ButtonGroup>
     );

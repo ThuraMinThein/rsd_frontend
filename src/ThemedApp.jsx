@@ -100,7 +100,6 @@ export default function ThemedApp() {
 
     useEffect(() => {
         getCurrentUser().then(res => {
-            console.log(res)
             if (!res.data.currentUser) {
                 setAuth(null);
                 return;
