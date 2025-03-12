@@ -7,10 +7,12 @@ import { formatRelative } from "date-fns";
 import { LikeButton } from "./LikeButton";
 import { CommentButton } from "./CommentButton";
 import { useQuery } from "@apollo/client";
-import { GetCurrentUser } from "../queries/post-query";
+import { GetCommentLikes, GetCurrentUser, GetPostLikes } from "../queries/post-query";
 
 export default function Item({ item, remove, primary, comment }) {
     const { data: currentUser } = useQuery(GetCurrentUser());
+    const { data: postLikes } = useQuery(GetPostLikes(item.id));
+    const { data: commentLikes } = useQuery(GetCommentLikes(item.id));
 
     const navigate = useNavigate();
     return (
@@ -71,7 +73,11 @@ export default function Item({ item, remove, primary, comment }) {
                         color="info"
                     />
                     <Typography variant="caption">{item.user.name}</Typography>
-                    <LikeButton item={item} comment={comment} />
+                    <LikeButton
+                        item={item}
+                        comment={comment}
+                        postLikes={postLikes?.postLikes}
+                        commentLikes={commentLikes?.commentLikes} />
                     <CommentButton item={item} comment={comment} />
                 </Box>
             </CardContent>

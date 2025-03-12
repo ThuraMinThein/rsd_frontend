@@ -4,15 +4,21 @@ import { Favorite as LikedIcon, FavoriteBorder as LikeIcon } from "@mui/icons-ma
 // import { useNavigate } from "react-router-dom";
 import { useApp } from "../ThemedApp";
 import { useMutation } from "react-query";
-import { likeUnlikePost, likeUnlikeComment } from "../libs/fetcher";
+import { likeUnlikeComment, likeUnlikePost } from "../libs/fetcher";
 
-export function LikeButton({ item, comment }) {
+export function LikeButton({ item, comment, postLikes, commentLikes }) {
     // const navigate = useNavigate();
     const { auth } = useApp();
+
     function isLiked() {
         if (!auth) return false;
-        if (!item.likes) return false;
-        return item.likes.find(like => like.userId == auth.id);
+        if (!comment) {
+            if (!postLikes) return false;
+            return postLikes.find(like => like.user.id == auth.id);
+        } else {
+            if (!commentLikes) return false;
+            return commentLikes.find(like => like.user.id == auth.id);
+        }
     }
     const likePost = useMutation(id => likeUnlikePost(id), {
         onSuccess: () => {
@@ -24,47 +30,30 @@ export function LikeButton({ item, comment }) {
             window.location.reload();
         },
     });
-    const unlikePost = useMutation(id => likeUnlikePost(id), {
-        onSuccess: () => {
-            window.location.reload();
-        },
-    });
-    const unlikeComment = useMutation(id => likeUnlikeComment(id), {
-        onSuccess: () => {
-            window.location.reload();
-        },
-    });
     return (
         <ButtonGroup>
-            {isLiked() ? (
-                <IconButton
-                    size="small"
-                    onClick={e => {
-                        comment
-                            ? unlikeComment.mutate(item.id)
-                            : unlikePost.mutate(item.id);
-                        e.stopPropagation();
-                    }}>
+
+            <IconButton
+                size="small"
+                onClick={e => {
+                    console.log("clicked")
+                    comment
+                        ? likeComment.mutate(item.id)
+                        : likePost.mutate(item.id);
+                    e.stopPropagation();
+                }}>
+                {isLiked() ? (
                     <LikedIcon
                         fontSize="small"
                         color="error"
                     />
-                </IconButton>
-            ) : (
-                <IconButton
-                    size="small"
-                    onClick={e => {
-                        comment
-                            ? likeComment.mutate(item.id)
-                            : likePost.mutate(item.id);
-                        e.stopPropagation();
-                    }}>
+                ) : (
                     <LikeIcon
                         fontSize="small"
                         color="error"
                     />
-                </IconButton>
-            )}
+                )}
+            </IconButton>
             <Button
                 onClick={e => {
                     if (!comment) {

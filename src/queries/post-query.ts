@@ -37,6 +37,22 @@ export const GetPosts = () => {
     `;
 }
 
+export const GetPostLikes = (id: number) => {
+    return gql`
+        query PostLikes {
+            postLikes(postId: ${id}) {
+                id
+                user {
+                    id
+                    name
+                    userName
+                    bio
+                }
+            }
+        }
+    `;
+}
+
 export const GetPostsWithUserId = (userId) => {
     return gql`
         query PostsWithUserId {
@@ -44,11 +60,18 @@ export const GetPostsWithUserId = (userId) => {
                 id
                 content
                 createdAt
+                totalLikes
                 user {
                     id
                     name
                     userName
                     bio
+                }
+                comments {
+                    id
+                    content
+                    createdAt
+                    totalLikes
                 }
             }
             userWithId(id: ${userId}) {
@@ -90,3 +113,19 @@ export const getCommentsWithPostId = (postId) => {
             }
     }
 `}
+
+export const GetCommentLikes = (id) => {
+    return gql`
+        query CommentLikes {
+            commentLikes(commentId: ${id}) {
+                id
+                user {
+                    id
+                    name
+                    userName
+                    bio
+                }
+            }
+        }
+    `;
+}
