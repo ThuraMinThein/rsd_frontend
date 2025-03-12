@@ -53,6 +53,35 @@ export async function likeUnlikePost(data) {
     }
 }
 
+export async function getCurrentUser() {
+    const token = "Bearer " + getToken();
+    const res = await fetch(`${base_url}/graphql`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization": token
+        },
+        body: JSON.stringify({
+            query: `
+            query CurrentUser {
+                currentUser {
+                    id
+                    name
+                    userName
+                    bio
+                }
+            }
+                `,
+        }),
+    })
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error(res.statusText);
+    }
+}
+
 export async function likeUnlikeComment(data) {
     const token = "Bearer " + getToken();
     const res = await fetch(`${base_url}/comments/like/${data.commentId}`, {

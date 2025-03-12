@@ -13,7 +13,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
 import { getToken } from "./auth/auth-service";
 import { setContext } from "@apollo/client/link/context";
-import { loginUser } from "./libs/fetcher";
+import { getCurrentUser } from "./libs/fetcher";
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL + "/graphql";
@@ -99,9 +99,17 @@ export default function ThemedApp() {
     }, [mode]);
 
     useEffect(() => {
-        loginUser().then(user => {
-            if (user) setAuth(user);
+        getCurrentUser().then(res => {
+            console.log(res)
+            if (!res.data.currentUser) {
+                setAuth(null);
+                return;
+            }
+            setAuth(res.data.currentUser);
+        }).catch(err => {
+            console.log(err);
         });
+
     }, []);
 
     return (
