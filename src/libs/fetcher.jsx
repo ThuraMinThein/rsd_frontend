@@ -36,22 +36,6 @@ export async function loginUser(userName, password) {
 
 }
 
-export async function likeUnlikePost(data) {
-    const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/posts/like/${data.postId}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            "authorization": token
-        },
-    });
-    if (res.ok) {
-        return await res.json();
-    } else {
-        throw new Error(res.statusText);
-    }
-}
 
 export async function getCurrentUser() {
     const token = "Bearer " + getToken();
@@ -82,9 +66,26 @@ export async function getCurrentUser() {
     }
 }
 
-export async function likeUnlikeComment(data) {
+export async function likeUnlikePost(id) {
     const token = "Bearer " + getToken();
-    const res = await fetch(`${base_url}/comments/like/${data.commentId}`, {
+    const res = await fetch(`${base_url}/posts/like/${id}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            "authorization": token
+        },
+    });
+    if (res.ok) {
+        return await res.json();
+    } else {
+        throw new Error(res.statusText);
+    }
+}
+
+export async function likeUnlikeComment(id) {
+    const token = "Bearer " + getToken();
+    const res = await fetch(`${base_url}/comments/like/${id}`, {
         method: "POST",
         credentials: "include",
         headers: {

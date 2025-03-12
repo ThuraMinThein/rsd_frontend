@@ -6,8 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { formatRelative } from "date-fns";
 import { LikeButton } from "./LikeButton";
 import { CommentButton } from "./CommentButton";
+import { useQuery } from "@apollo/client";
+import { GetCurrentUser } from "../queries/post-query";
 
 export default function Item({ item, remove, primary, comment }) {
+    const { data: currentUser } = useQuery(GetCurrentUser());
 
     const navigate = useNavigate();
     return (
@@ -41,14 +44,15 @@ export default function Item({ item, remove, primary, comment }) {
                             {formatRelative(item?.createdAt, new Date())}
                         </Typography>
                     </Box>
-                    <IconButton
-                        size="small"
-                        onClick={e => {
-                            remove(item.id);
-                            e.stopPropagation();
-                        }}>
-                        <DeleteIcon fontSize="inherit" />
-                    </IconButton>
+                    {item.user?.id == currentUser?.currentUser?.id &&
+                        <IconButton
+                            size="small"
+                            onClick={e => {
+                                remove(item.id);
+                                e.stopPropagation();
+                            }}>
+                            <DeleteIcon fontSize="inherit" />
+                        </IconButton>}
                 </Box>
                 <Typography sx={{ my: 3 }}>{item.content}</Typography>
                 <Box

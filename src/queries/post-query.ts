@@ -26,6 +26,12 @@ export const GetPosts = () => {
                     name
                     userName
                 }
+                comments {
+                    id
+                    content
+                    createdAt
+                    totalLikes
+                }
             }
         }
     `;

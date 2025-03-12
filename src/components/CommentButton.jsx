@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
     IconButton,
     ButtonGroup,
@@ -6,7 +7,9 @@ import {
 import {
     ChatBubbleOutline as CommentIcon
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 export function CommentButton({ item, comment }) {
+    const navigate = useNavigate();
     return (
         <>
             {!comment && (
@@ -17,11 +20,14 @@ export function CommentButton({ item, comment }) {
                             color="info"
                         />
                     </IconButton>
-                    <Button
+                    <Button onClick={(e) => {
+                        navigate(`/comments/${item.id}`);
+                        e.stopPropagation()
+                    }}
                         sx={{ color: "text.fade" }}
                         variant="text"
                         size="small">
-                        {item.comments?.length}
+                        {item.comments?.length || 0}
                     </Button>
                 </ButtonGroup>
             )}

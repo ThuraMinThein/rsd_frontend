@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 import { IconButton, ButtonGroup, Button } from "@mui/material";
 import { Favorite as LikedIcon, FavoriteBorder as LikeIcon } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
-import { useApp, queryClient } from "../ThemedApp";
+// import { useNavigate } from "react-router-dom";
+import { useApp } from "../ThemedApp";
 import { useMutation } from "react-query";
 import { likeUnlikePost, likeUnlikeComment } from "../libs/fetcher";
 
 export function LikeButton({ item, comment }) {
-    console.log(item)
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { auth } = useApp();
     function isLiked() {
         if (!auth) return false;
@@ -17,24 +16,22 @@ export function LikeButton({ item, comment }) {
     }
     const likePost = useMutation(id => likeUnlikePost(id), {
         onSuccess: () => {
-            queryClient.refetchQueries("posts");
-            queryClient.refetchQueries("comments");
+            window.location.reload();
         },
     });
     const likeComment = useMutation(id => likeUnlikeComment(id), {
         onSuccess: () => {
-            queryClient.refetchQueries("comments");
+            window.location.reload();
         },
     });
     const unlikePost = useMutation(id => likeUnlikePost(id), {
         onSuccess: () => {
-            queryClient.refetchQueries("posts");
-            queryClient.refetchQueries("comments");
+            window.location.reload();
         },
     });
     const unlikeComment = useMutation(id => likeUnlikeComment(id), {
         onSuccess: () => {
-            queryClient.refetchQueries("comments");
+            window.location.reload();
         },
     });
     return (
@@ -70,10 +67,10 @@ export function LikeButton({ item, comment }) {
             )}
             <Button
                 onClick={e => {
-                    if (comment) {
-                        navigate(`/likes/${item.id}/comment`);
+                    if (!comment) {
+                        // navigate(`/likes/${item.id}/comment`);
                     } else {
-                        navigate(`/likes/${item.id}/post`);
+                        // navigate(`/likes/${item.id}/post`);
                     }
                     e.stopPropagation();
                 }}
